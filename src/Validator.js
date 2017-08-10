@@ -1,7 +1,12 @@
 import validations from './validations';
 
 export default class Validator {
-  constructor(fields, customValidations = {}, additionalValidationParams = {}) {
+  constructor(
+    fieldRules,
+    fields,
+    customValidations = {},
+    additionalValidationParams = {}
+  ) {
     let rules = validations;
     for (let rule in customValidations) {
       if (
@@ -21,6 +26,7 @@ export default class Validator {
       }
     }
     this.validations = rules;
+    this.fieldRules = fieldRules;
     this.fields = fields;
     this.additionalValidationParams = additionalValidationParams;
   }
@@ -34,15 +40,15 @@ export default class Validator {
     return this.validations[rule];
   }
 
-  validate(field, value, fields) {
+  validate(field) {
     return new Promise(resolve => {
-      const rules = this.validations[field];
+      const rules = this.fieldRules[field];
       const errors = [];
       rules.forEach(rule => {
         const error = this.getRule(rule);
         if (
           error.isInvalid(
-            value,
+            this.fields[field].value,
             rule,
             this.fields,
             this.additionalValidationParams
@@ -51,7 +57,15 @@ export default class Validator {
           errors.push(error.message(rule));
         }
       });
-      resolve(errors);
+      resolve({ [field]: errors });
     });
+  }
+
+  validateAll() {
+    const promises = [];
+    for (field in this.fields) {
+      promises.push(this.validate(field));
+    }
+    return Promise.all(promises);
   }
 }
