@@ -21,22 +21,22 @@ const fieldRules = {
 };
 
 describe('Validator', () => {
-  const validator = new Validator(fieldRules);
+  const validator = new Validator('form', fieldRules);
   test('should be an instance of the Validator class', () => {
     return expect(validator).toBeInstanceOf(Validator);
   });
   test('should validate a field', () => {
-    const form = fillForm();
+    fillForm();
     expect.assertions(1);
     return validator
-      .validate('name', form)
+      .validate('name')
       .then(error => expect(error).toEqual({ name: [] }));
   });
 
   test('should validate a field with an error', () => {
-    const form = fillForm(undefined, 'sscaff1');
+    fillForm(undefined, 'sscaff1');
     expect.assertions(1);
-    return validator.validate('email', form).then(error =>
+    return validator.validate('email').then(error =>
       expect(error).toEqual({
         email: [validations.email.message()],
       })
@@ -44,9 +44,9 @@ describe('Validator', () => {
   });
 
   test('should validate all fields', () => {
-    const form = fillForm(undefined, '');
+    fillForm(undefined, '');
     expect.assertions(1);
-    return validator.validateAll(form).then(error => {
+    return validator.validateAll().then(error => {
       // notice order matters in the errors array
       expect(error).toEqual({
         name: [],
@@ -58,7 +58,7 @@ describe('Validator', () => {
   test('should validate with original snapshot of fields', () => {
     const form = fillForm('');
     expect.assertions(1);
-    return validator.validate('name', form, true).then(error => {
+    return validator.validate('name', undefined, true).then(error => {
       expect(error).toEqual({
         ...validator.serializeForm(form),
         name: {
@@ -81,7 +81,7 @@ describe('Validator', () => {
         },
       },
     };
-    const validator2 = new Validator(fieldRules, customValidations);
+    const validator2 = new Validator('form', fieldRules, customValidations);
     return expect(validator2.validations.required.message()).toBe(newMessage);
   });
 
@@ -100,16 +100,63 @@ describe('Validator', () => {
       },
     };
     const validator2 = new Validator(
+      'form',
       { ...fieldRules, name: [...fieldRules.name, 'isNumber'] },
       customValidations
     );
     expect.assertions(2);
-    expect(validator2.validations.isNumber).toMatchObject(
-      customValidations.isNumber
-    );
-    const form = fillForm();
-    return validator2.validate('name', form).then(error => {
+    expect(validator2.validations.isNumber).toEqual(customValidations.isNumber);
+    fillForm();
+    return validator2.validate('name').then(error => {
       expect(error).toEqual({ name: [message] });
+    });
+  });
+
+  test('should be able to overwite a rule', () => {
+    const message = 'This field has no character length.';
+    const customValidations = {
+      required: {
+        isInvalid(value) {
+          return value.length === 0;
+        },
+        message() {
+          return message;
+        },
+      },
+    };
+    const validator2 = new Validator(
+      'form',
+      { ...fieldRules, name: ['required'] },
+      customValidations
+    );
+    fillForm('');
+    expect.assertions(2);
+    expect(validator2.validations.required).toEqual(customValidations.required);
+    return validator2.validate('name').then(error => {
+      expect(error).toEqual({ name: [message] });
+    });
+  });
+
+  test('should be able to test min rule', () => {
+    fillForm('st');
+    expect.assertions(1);
+    return validator.validate('name').then(error => {
+      expect(error).toEqual({
+        name: [validator.validations.min.message('min3')],
+      });
+    });
+  });
+
+  test('should be able to test max rule', () => {
+    const validator2 = new Validator('form', {
+      ...fieldRules,
+      email: ['max5'],
+    });
+    expect.assertions(1);
+    return validator2.validate('email').then(error => {
+      expect(error).toEqual({
+        email: [validator2.validations.max.message('max5')],
+      });
     });
   });
 });

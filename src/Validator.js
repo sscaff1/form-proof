@@ -2,6 +2,7 @@ import validations from './validations';
 
 export default class Validator {
   constructor(
+    form,
     fieldRules,
     customValidations = {},
     additionalValidationParams = {}
@@ -24,8 +25,9 @@ export default class Validator {
         rules = { ...rules, [rule]: customValidations[rule] };
       }
     }
-    this.validations = rules;
+    this.form = form;
     this.fieldRules = fieldRules;
+    this.validations = rules;
     this.additionalValidationParams = additionalValidationParams;
   }
 
@@ -36,6 +38,11 @@ export default class Validator {
       return this.validations.min;
     }
     return this.validations[rule];
+  }
+
+  getFormState() {
+    const form = document.querySelector(this.form);
+    return this.serializeForm(form);
   }
 
   serializeForm(form) {
@@ -49,12 +56,12 @@ export default class Validator {
 
   validate(
     field,
-    form,
+    form = undefined,
     withFields = false,
     valueKey = 'value',
     errorMessageKey = 'errorMessages'
   ) {
-    const fields = form.elements ? this.serializeForm(form) : form;
+    const fields = form || this.getFormState();
     return new Promise(resolve => {
       const rules = this.fieldRules[field];
       const errors = [];
@@ -81,8 +88,8 @@ export default class Validator {
     });
   }
 
-  validateAll(form, withFields = false, errorMessageKey = 'errorMessages') {
-    const fields = this.serializeForm(form);
+  validateAll(withFields = false, errorMessageKey = 'errorMessages') {
+    const fields = this.getFormState();
     const promises = [];
     for (let field in fields) {
       promises.push(this.validate(field, fields));
