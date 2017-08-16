@@ -88,8 +88,8 @@ export default class Validator {
     });
   }
 
-  validateAll(withFields = false, errorMessageKey = 'errorMessages') {
-    const fields = this.getFormState();
+  validateAll(form = undefined, withFields = false, errorMessageKey = 'errorMessages') {
+    const fields = form || this.getFormState();
     const promises = [];
     for (let field in fields) {
       promises.push(this.validate(field, fields));
