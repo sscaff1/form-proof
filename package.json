@@ -4,7 +4,8 @@
   "description": "This package provides basic form validations with 0 dependencies.",
   "main": "lib/",
   "scripts": {
-    "test": "jest --watch --verbose",
+    "test": "jest",
+    "test:watch": "jest --watchAll --verbose",
     "coverage": "jest --coverage",
     "build": "npm run format && npm run compile",
     "format": "prettier --single-quote --trailing-comma es5 --write \"{src,test}/**/*.js\"",
