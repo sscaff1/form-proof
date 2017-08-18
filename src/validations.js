@@ -16,7 +16,7 @@ export default {
     },
   },
   max: {
-    isInvalid(value, rule) {
+    isInvalid(value, field, rule) {
       const maxChars = parseInt(rule.substr(3), 10);
       return value.length > maxChars;
     },
@@ -28,7 +28,7 @@ export default {
     },
   },
   min: {
-    isInvalid(value, rule) {
+    isInvalid(value, field, rule) {
       const maxChars = parseInt(rule.substr(3), 10);
       return value.length < maxChars;
     },
@@ -48,7 +48,7 @@ export default {
     },
   },
   zipCode: {
-    isInvalid(value, rule, fields) {
+    isInvalid(value, field, rule, fields) {
       if (STANDARD_COUNTRIES.includes(fields.country.value)) {
         return validations.max.isInvalid(value, 'max10');
       }

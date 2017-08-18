@@ -2,8 +2,8 @@ import validations from './validations';
 
 export default class Validator {
   constructor(
-    form,
     fieldRules,
+    form,
     customValidations = {},
     additionalValidationParams = {}
   ) {
@@ -49,7 +49,7 @@ export default class Validator {
     const fields = {};
     const elements = form.elements;
     for (let i = 0; i < elements.length; i++) {
-      fields[elements[i].name] = elements[i].value;
+      fields[elements[i].name] = elements[i];
     }
     return fields;
   }
@@ -58,7 +58,6 @@ export default class Validator {
     field,
     form = undefined,
     withFields = false,
-    valueKey = 'value',
     errorMessageKey = 'errorMessages'
   ) {
     const fields = form || this.getFormState();
@@ -69,7 +68,8 @@ export default class Validator {
         const error = this.getRule(rule);
         if (
           error.isInvalid(
-            fields[field],
+            fields[field].value,
+            field,
             rule,
             fields,
             this.additionalValidationParams
@@ -81,14 +81,18 @@ export default class Validator {
       if (withFields) {
         return resolve({
           ...fields,
-          [field]: { [valueKey]: fields[field], [errorMessageKey]: errors },
+          [field]: { value: fields[field].value, [errorMessageKey]: errors },
         });
       }
       return resolve({ [field]: errors });
     });
   }
 
-  validateAll(form = undefined, withFields = false, errorMessageKey = 'errorMessages') {
+  validateAll(
+    form = undefined,
+    withFields = false,
+    errorMessageKey = 'errorMessages'
+  ) {
     const fields = form || this.getFormState();
     const promises = [];
     for (let field in fields) {

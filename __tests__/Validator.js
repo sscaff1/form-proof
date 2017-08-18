@@ -21,7 +21,7 @@ const fieldRules = {
 };
 
 describe('Validator', () => {
-  const validator = new Validator('form', fieldRules);
+  const validator = new Validator(fieldRules, 'form');
   test('should be an instance of the Validator class', () => {
     return expect(validator).toBeInstanceOf(Validator);
   });
@@ -81,7 +81,7 @@ describe('Validator', () => {
         },
       },
     };
-    const validator2 = new Validator('form', fieldRules, customValidations);
+    const validator2 = new Validator(fieldRules, 'form', customValidations);
     return expect(validator2.validations.required.message()).toBe(newMessage);
   });
 
@@ -100,8 +100,8 @@ describe('Validator', () => {
       },
     };
     const validator2 = new Validator(
-      'form',
       { ...fieldRules, name: [...fieldRules.name, 'isNumber'] },
+      'form',
       customValidations
     );
     expect.assertions(2);
@@ -125,8 +125,8 @@ describe('Validator', () => {
       },
     };
     const validator2 = new Validator(
-      'form',
       { ...fieldRules, name: ['required'] },
+      'form',
       customValidations
     );
     fillForm('');
@@ -148,10 +148,13 @@ describe('Validator', () => {
   });
 
   test('should be able to test max rule', () => {
-    const validator2 = new Validator('form', {
-      ...fieldRules,
-      email: ['max5'],
-    });
+    const validator2 = new Validator(
+      {
+        ...fieldRules,
+        email: ['max5'],
+      },
+      'form'
+    );
     expect.assertions(1);
     return validator2.validate('email').then(error => {
       expect(error).toEqual({

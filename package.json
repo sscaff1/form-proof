@@ -11,9 +11,7 @@
     "compile": "babel -d lib/ src/"
   },
   "jest": {
-    "collectCoverageFrom": [
-      "**/src/*.{js,jsx}"
-    ],
+    "collectCoverageFrom": ["**/src/*.{js,jsx}", "!**/examples/**"],
     "coverageDirectory": "./coverage/",
     "collectCoverage": true
   },
