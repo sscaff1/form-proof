@@ -1,4 +1,9 @@
+import Promise from 'promise-polyfill';
 import validations from './validations';
+
+if (!window.Promise) {
+  window.Promise = Promise;
+}
 
 export default class Validator {
   constructor(

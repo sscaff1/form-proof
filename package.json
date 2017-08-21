@@ -1,5 +1,5 @@
 {
-  "name": "basic-form-validator",
+  "name": "form-proof",
   "version": "0.1.0",
   "description": "This package provides basic form validations with 0 dependencies.",
   "main": "lib/",
@@ -11,7 +11,10 @@
     "compile": "babel -d lib/ src/"
   },
   "jest": {
-    "collectCoverageFrom": ["**/src/*.{js,jsx}", "!**/examples/**"],
+    "collectCoverageFrom": [
+      "**/src/*.{js,jsx}",
+      "!**/examples/**"
+    ],
     "coverageDirectory": "./coverage/",
     "collectCoverage": true
   },
@@ -36,5 +39,8 @@
     "compression-webpack-plugin": "^1.0.0",
     "jest": "^20.0.4",
     "prettier": "^1.5.3"
+  },
+  "dependencies": {
+    "promise-polyfill": "^6.0.2"
   }
 }

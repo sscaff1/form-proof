@@ -47,17 +47,6 @@ export default {
       return 'This field does not accept the < or > characters';
     },
   },
-  zipCode: {
-    isInvalid(value, field, rule, fields) {
-      if (STANDARD_COUNTRIES.includes(fields.country.value)) {
-        return validations.max.isInvalid(value, 'max10');
-      }
-      return false;
-    },
-    message() {
-      return validations.max.message('max10');
-    },
-  },
   email: {
     isInvalid(value) {
       const emailRegExp = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,})+$/;
