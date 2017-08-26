@@ -1,5 +1,5 @@
 # Form Pure
-[![Build Status](https://travis-ci.org/sscaff1/form-proof.svg?branch=master)](https://travis-ci.org/sscaff1/form-proof)[![codecov](https://codecov.io/gh/sscaff1/form-proof/branch/master/graph/badge.svg)](https://codecov.io/gh/sscaff1/form-proof)
+[![Build Status](https://travis-ci.org/sscaff1/form-proof.svg?branch=master)](https://travis-ci.org/sscaff1/form-proof) [![codecov](https://codecov.io/gh/sscaff1/form-proof/branch/master/graph/badge.svg)](https://codecov.io/gh/sscaff1/form-proof)
 
 ## Status
 This package is still a work in progress. Not all use cases below have been covered.
@@ -16,6 +16,8 @@ Install the package:
 ```
 yarn add form-pure
 ```
+
+or
 
 ```
 npm i --save form-pure
