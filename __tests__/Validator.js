@@ -65,7 +65,7 @@ describe('Validator', () => {
           value: '',
           errorMessages: [
             validations.required.message(),
-            validations.min.message('min3'),
+            validations.min.message(undefined, undefined, 'min3'),
           ],
         },
       });
@@ -142,7 +142,7 @@ describe('Validator', () => {
     expect.assertions(1);
     return validator.validate('name').then(error => {
       expect(error).toEqual({
-        name: [validator.validations.min.message('min3')],
+        name: [validator.validations.min.message(undefined, undefined, 'min3')],
       });
     });
   });
@@ -158,7 +158,9 @@ describe('Validator', () => {
     expect.assertions(1);
     return validator2.validate('email').then(error => {
       expect(error).toEqual({
-        email: [validator2.validations.max.message('max5')],
+        email: [
+          validator2.validations.max.message(undefined, undefined, 'max5'),
+        ],
       });
     });
   });

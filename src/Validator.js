@@ -70,17 +70,16 @@ export default class Validator {
       const rules = this.fieldRules[field];
       const errors = [];
       rules.forEach(rule => {
+        const validationArguments = [
+          fields[field].value,
+          field,
+          rule,
+          fields,
+          this.additionalValidationParams,
+        ];
         const error = this.getRule(rule);
-        if (
-          error.isInvalid(
-            fields[field].value,
-            field,
-            rule,
-            fields,
-            this.additionalValidationParams
-          )
-        ) {
-          errors.push(error.message(rule));
+        if (error.isInvalid(...validationArguments)) {
+          errors.push(error.message(...validationArguments));
         }
       });
       if (withFields) {

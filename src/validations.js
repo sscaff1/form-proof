@@ -20,7 +20,7 @@ export default {
       const maxChars = parseInt(rule.substr(3), 10);
       return value.length > maxChars;
     },
-    message(rule) {
+    message(value, field, rule) {
       return `Please enter no more than ${parseInt(
         rule.substr(3),
         10
@@ -32,7 +32,7 @@ export default {
       const maxChars = parseInt(rule.substr(3), 10);
       return value.length < maxChars;
     },
-    message(rule) {
+    message(value, field, rule) {
       return `Please enter at least ${parseInt(
         rule.substr(3),
         10
