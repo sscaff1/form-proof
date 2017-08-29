@@ -1,10 +1,37 @@
-export default {
+const validitions = {
   required: {
     isInvalid(value) {
       return !value;
     },
     message() {
       return 'This field is required.';
+    },
+  },
+  alpha: {
+    isInvalid(value) {
+      return /[^a-zA-Z\s]/.test(value);
+    },
+    message() {
+      return 'This field only accepts apha characters.';
+    },
+  },
+  numeric: {
+    isInvalid(value) {
+      return /[^0-9]/.test(value);
+    },
+    message() {
+      return 'This field only accepts numeric characters.';
+    },
+  },
+  alphaNumeric: {
+    isInvalid(value) {
+      return (
+        validitions.numeric.isInvalid(value) &&
+        validitions.alpha.isInvalid(value)
+      );
+    },
+    message() {
+      return 'This field only accepts aphanumeric characters.';
     },
   },
   requiredSelect: {
@@ -39,14 +66,6 @@ export default {
       )} characters.`;
     },
   },
-  restrictChars: {
-    isInvalid(value) {
-      return /[<>]/.test(value);
-    },
-    message() {
-      return 'This field does not accept the < or > characters';
-    },
-  },
   email: {
     isInvalid(value) {
       const emailRegExp = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,})+$/;
@@ -59,10 +78,12 @@ export default {
   phone: {
     isInvalid(value) {
       const phoneRegExp = /^[\(\)\-\+\d]*$/;
-      return !phoneRegExp.test(value) || value.length < 10;
+      return !phoneRegExp.test(value);
     },
     message() {
       return 'Please specify a valid phone number';
     },
   },
 };
+
+export default validitions;

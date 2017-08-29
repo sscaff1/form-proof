@@ -1,20 +1,17 @@
 {
   "name": "form-proof",
-  "version": "0.1.2",
-  "description": "This package provides basic form validations with 0 dependencies.",
+  "version": "0.2.0",
+  "description": "This package provides basic form validations with minimal validations.",
   "main": "lib/",
   "scripts": {
     "test": "jest && codecov",
     "test:watch": "jest --watchAll --verbose",
     "build": "npm run format && npm run compile",
-    "format": "prettier --single-quote --trailing-comma es5 --write \"{src,test}/**/*.js\"",
+    "format": "prettier --single-quote --trailing-comma es5 --write \"{src,__tests__}/**/*.js\"",
     "compile": "babel -d lib/ src/"
   },
   "jest": {
-    "collectCoverageFrom": [
-      "**/src/*.{js,jsx}",
-      "!**/examples/**"
-    ],
+    "collectCoverageFrom": ["**/src/*.{js,jsx}", "!**/examples/**"],
     "coverageDirectory": "./coverage/",
     "collectCoverage": true
   },
@@ -42,5 +39,8 @@
   },
   "dependencies": {
     "promise-polyfill": "^6.0.2"
+  },
+  "engines": {
+    "node": ">= 0.12"
   }
 }

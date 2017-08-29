@@ -2,6 +2,7 @@ import Promise from 'promise-polyfill';
 import validations from './validations';
 
 if (!window.Promise) {
+  // IE11 polyfill
   window.Promise = Promise;
 }
 
@@ -92,11 +93,7 @@ export default class Validator {
     });
   }
 
-  validateAll(
-    form = undefined,
-    withFields = false,
-    errorMessageKey = 'errorMessages'
-  ) {
+  validateAll(form = undefined) {
     const fields = form || this.getFormState();
     const promises = [];
     for (let field in fields) {

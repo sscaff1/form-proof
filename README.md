@@ -1,9 +1,6 @@
 # Form Proof
 [![Build Status](https://travis-ci.org/sscaff1/form-proof.svg?branch=master)](https://travis-ci.org/sscaff1/form-proof) [![codecov](https://codecov.io/gh/sscaff1/form-proof/branch/master/graph/badge.svg)](https://codecov.io/gh/sscaff1/form-proof)
 
-## Status
-This package is still a work in progress. Not all use cases below have been covered.
-
 ## Purpose
 Form validation shouldn't have to be a bloated library with tons of dependencies. At the the end of the day, it's not that hard. This small, extendable package attempts to demonstrate that. This library is **<2kbs** gzipped making it very light weight. The library is meant for forms, but is isomorphic by nature making it great for a wide variety of use cases. Help and suggestions are always welcome.
 
