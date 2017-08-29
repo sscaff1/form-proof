@@ -1,4 +1,4 @@
-# Form Pure
+# Form Proof
 [![Build Status](https://travis-ci.org/sscaff1/form-proof.svg?branch=master)](https://travis-ci.org/sscaff1/form-proof) [![codecov](https://codecov.io/gh/sscaff1/form-proof/branch/master/graph/badge.svg)](https://codecov.io/gh/sscaff1/form-proof)
 
 ## Status
@@ -14,13 +14,13 @@ Form pure has one dependency, a small Promise poly-fill for IE browsers (**<1kb 
 Install the package:
 
 ```
-yarn add form-pure
+yarn add form-proof
 ```
 
 or
 
 ```
-npm i --save form-pure
+npm i --save form-proof
 ```
 
 Then use it:
@@ -34,7 +34,7 @@ Then use it:
 ```
 
 ```js
-import Validator from 'form-pure';
+import Validator from 'form-proof';
 
 /***
 * The field rules is an object with its keys corresponding to the names of our form inputs
